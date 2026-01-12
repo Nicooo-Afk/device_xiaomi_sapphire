@@ -4,11 +4,17 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
+# Disable dexpreopt for org.lineageos.platform
+DEXPREOPT_DISABLED_MODULES += org.lineageos.platform
+
+# Disable strict dexpreopt artifact check (required for custom ROMs)
+DISABLE_DEXPREOPT_CHECK := true
+
+# org.lineageos.platform must NOT be a system_server jar
+PRODUCT_SYSTEM_SERVER_JARS_REMOVE := org.lineageos.platform
+
 # Inherit from the proprietary version
 include vendor/xiaomi/sapphire/BoardConfigVendor.mk
-
-# Inherit from proprietary files for miuicamera
--include device/xiaomi/miuicamera-sapphire/BoardConfig.mk
 
 DEVICE_PATH := device/xiaomi/sapphire
 KERNEL_PATH := $(DEVICE_PATH)-kernel
@@ -34,6 +40,14 @@ AB_OTA_PARTITIONS += \
     vendor \
     vendor_boot \
     vendor_dlkm
+
+# AdServices cannot be dexpreopted on custom ROMs
+PRODUCT_DEXPREOPT_NEVER_ALLOW := \
+    com.android.adservices
+
+# Do not build AdServices at all
+PRODUCT_PACKAGES_REMOVE := com.android.adservices
+
 
 # ANT+
 BOARD_ANT_WIRELESS_DEVICE := "qualcomm-hidl"
@@ -179,7 +193,7 @@ TARGET_COPY_OUT_SYSTEM_EXT := system_ext
 TARGET_COPY_OUT_VENDOR := vendor
 TARGET_COPY_OUT_VENDOR_DLKM := vendor_dlkm
 
--include vendor/lineage/config/BoardConfigReservedSize.mk
+-include vendor/eunoia/config/BoardConfigReservedSize.mk
 
 # Platform
 BOARD_USES_QCOM_HARDWARE := true
@@ -279,3 +293,4 @@ WIFI_DRIVER_STATE_ON := "ON"
 WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
 WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
+

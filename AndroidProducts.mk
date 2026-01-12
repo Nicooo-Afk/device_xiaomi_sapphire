@@ -5,9 +5,9 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_sapphire.mk
+    $(LOCAL_DIR)/eunoia_sapphire.mk
 
 COMMON_LUNCH_CHOICES := \
-    lineage_sapphire-user \
-    lineage_sapphire-userdebug \
-    lineage_sapphire-eng
+    eunoia_sapphire-user \
+    eunoia_sapphire-userdebug \
+    eunoia_sapphire-eng
